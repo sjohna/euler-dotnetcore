@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EulerLib", "EulerLib\EulerL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Euler7", "Euler7\Euler7.csproj", "{C2F4D17A-0DDE-4F46-B61B-ECE6D35D392C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Euler9", "Euler9\Euler9.csproj", "{40617EE5-CA1C-4324-84B3-E3ED15D995BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,5 +130,17 @@ Global
 		{C2F4D17A-0DDE-4F46-B61B-ECE6D35D392C}.Release|x64.Build.0 = Release|Any CPU
 		{C2F4D17A-0DDE-4F46-B61B-ECE6D35D392C}.Release|x86.ActiveCfg = Release|Any CPU
 		{C2F4D17A-0DDE-4F46-B61B-ECE6D35D392C}.Release|x86.Build.0 = Release|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Debug|x64.Build.0 = Debug|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Debug|x86.Build.0 = Debug|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Release|x64.ActiveCfg = Release|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Release|x64.Build.0 = Release|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{40617EE5-CA1C-4324-84B3-E3ED15D995BB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

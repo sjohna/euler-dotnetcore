@@ -10,7 +10,7 @@ namespace Euler5
     {
         static void Main(string[] args)
         {
-            ClosedRange(1,20).Aggregate((a,b) => LCM(a,b)).ConsoleWriteLine();
+            ClosedRange(1,20).Aggregate(LCM).ConsoleWriteLine();
         }
     }
 }

@@ -26,5 +26,10 @@ namespace Euler
         {
             return number.ToString().Reverse() == number.ToString();
         }
+
+        public static long Squared(this long number)
+        {
+            return checked(number * number);
+        }
     }
 }

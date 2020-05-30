@@ -10,12 +10,8 @@ namespace Euler4
     {
         static void Main(string[] args)
         {
-            (
-            from x in ClosedRange(100,999)
-            from y in ClosedRange(100,999)
-            where (x*y).IsPalindromeNumber()
-            select x * y
-            )
+            CrossSelect(ClosedRange(100,999), ClosedRange(100,999), (x,y) => x*y)
+            .Where(n => n.IsPalindromeNumber())
             .Max()
             .ConsoleWriteLine();
         }

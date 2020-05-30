@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 using static Euler.Mathematical;
 
@@ -39,6 +40,13 @@ namespace Euler
         public static IEnumerable<long> Primes() 
         {
             return CountFrom(3,2).Where(n => IsPrime(n)).Prepend(2L);
+        }
+
+        public static IEnumerable<TResult> CrossSelect<TLeft,TRight,TResult>(IEnumerable<TLeft> left, IEnumerable<TRight> right, Func<TLeft,TRight,TResult> selectFunc) 
+        {
+            return from leftValue in left
+                   from rightValue in right
+                   select selectFunc(leftValue,rightValue);
         }
     }
 }
