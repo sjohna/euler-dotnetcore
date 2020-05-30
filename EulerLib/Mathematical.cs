@@ -47,6 +47,5 @@ namespace Euler
 
             return true;    // never hit
         }
-
     }
 }

@@ -55,5 +55,16 @@ namespace Euler
                    where filterFunc(leftValue,rightValue)
                    select selectFunc(leftValue,rightValue);
         }
+
+        public static IEnumerable<long> Collatz(long start)
+        {
+            long num = start;
+            while (num != 1) {
+                yield return num;
+                num = num % 2 == 0 ? num/2 : num * 3 + 1;
+            }
+
+            yield return 1;
+        }
     }
 }
