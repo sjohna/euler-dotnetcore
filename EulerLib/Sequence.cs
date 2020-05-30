@@ -42,10 +42,17 @@ namespace Euler
             return CountFrom(3,2).Where(n => IsPrime(n)).Prepend(2L);
         }
 
-        public static IEnumerable<TResult> CrossSelect<TLeft,TRight,TResult>(IEnumerable<TLeft> left, IEnumerable<TRight> right, Func<TLeft,TRight,TResult> selectFunc) 
+        public static IEnumerable<TResult> CrossSelect<TLeft,TRight,TResult>(
+            IEnumerable<TLeft> left, 
+            IEnumerable<TRight> right, 
+            Func<TLeft,TRight,TResult> selectFunc,
+            Func<TLeft,TRight, bool> filterFunc = null) 
         {
+            filterFunc = filterFunc ?? ((TLeft l, TRight r) => true);
+
             return from leftValue in left
                    from rightValue in right
+                   where filterFunc(leftValue,rightValue)
                    select selectFunc(leftValue,rightValue);
         }
     }
