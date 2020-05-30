@@ -37,5 +37,10 @@ namespace Euler
             return checked((a*b)/GCD(a,b));
         }
 
+        public static bool IsPrime(long num)
+        {
+            return Factorize(num).Count == 1;
+        }
+
     }
 }

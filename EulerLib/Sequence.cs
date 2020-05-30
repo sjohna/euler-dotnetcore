@@ -1,5 +1,7 @@
 using System.Collections.Generic;
-using System;
+using System.Linq;
+
+using static Euler.Mathematical;
 
 namespace Euler
 {
@@ -32,6 +34,11 @@ namespace Euler
             {
                 yield return num;
             }
+        }
+
+        public static IEnumerable<long> Primes() 
+        {
+            return CountFrom(3,2).Where(n => IsPrime(n)).Prepend(2L);
         }
     }
 }
