@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
+using static Euler.Sequence;
 
 namespace Euler
 {
@@ -9,9 +11,7 @@ namespace Euler
         {
             var ret = new List<long>();
 
-            var factors = Enumerable.Concat(2L.Yield(), Sequence.CountFrom(3,2));
-
-            foreach (var factor in factors) 
+            foreach (var factor in CountFrom(3,2).Prepend(2L)) 
             {
                 if(factor > num) break;
 
@@ -39,7 +39,13 @@ namespace Euler
 
         public static bool IsPrime(long num)
         {
-            return Factorize(num).Count == 1;
+            foreach (var factor in CountFrom(3,2).Prepend(2L))
+            {
+                if (factor > Math.Sqrt(num)) return true;
+                if (num % factor == 0) return false;
+            }
+
+            return true;    // never hit
         }
 
     }
