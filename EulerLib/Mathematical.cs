@@ -39,6 +39,8 @@ namespace Euler
 
         public static bool IsPrime(long num)
         {
+            if(num < 2) return false;
+
             foreach (var factor in CountFrom(3,2).Prepend(2L))
             {
                 if (factor > Math.Sqrt(num)) return true;

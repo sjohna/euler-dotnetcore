@@ -31,5 +31,10 @@ namespace Euler
         {
             return checked(number * number);
         }
+
+        public static TResult ApplyFunction<TInput, TResult>(this TInput input, Func<TInput, TResult> func)
+        {
+            return func(input);
+        }
     }
 }
