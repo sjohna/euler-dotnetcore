@@ -66,5 +66,25 @@ namespace Euler
 
             yield return 1;
         }
+
+        public static IEnumerable<TAccumulate> PartialAggregates<TSource, TAccumulate>(this IEnumerable<TSource> sequence, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> aggregateFunc)
+        {
+            TAccumulate soFar = seed;
+            foreach (var item in sequence)
+            {
+                soFar = aggregateFunc(soFar, item);
+                yield return soFar;
+            }
+        }
+
+        public static IEnumerable<long> PartialSums(this IEnumerable<long> sequence)
+        {
+            return sequence.PartialAggregates(0L, (long a, long b) => a + b);
+        }
+
+        public static IEnumerable<(int index, TResult value)> SelectWithIndices<TSource, TResult>(this IEnumerable<TSource> sequence, Func<TSource, TResult> selectFunc)
+        {
+            return sequence.Select((item, index) => (index: index, value: selectFunc(item)));
+        }
     }
 }
