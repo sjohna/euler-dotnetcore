@@ -2,10 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using StackExchange.Profiling;
 
 using static Euler.Extension;
 using static Euler.Sequence;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Euler81
 {
@@ -32,13 +32,16 @@ namespace Euler81
             }
         }
 
-        class SearchState
+        class SearchState : IComparable<SearchState>
         {
             public long[,] matrix;
             public (int col, int row) currentLocation;
             public HashSet<(int col, int row)> locationsInPath;
             public long pathSum;
             public long heuristicValue;
+
+            public int CompareTo([AllowNull] SearchState other) =>
+                this.heuristicValue > other.heuristicValue ? 1 : this.heuristicValue == other.heuristicValue ? 0 : -1;
         }
 
         static IEnumerable<SearchState> NeighborFunc(SearchState s, int numCols, int numRows, Func<SearchState, long> heuristicFunc, long[,] minPathLengths)
@@ -108,17 +111,12 @@ namespace Euler81
 
         static void Main(string[] args)
         {
-            var profiler = MiniProfiler.StartNew("Main");
-
-            long[,] matrix;
+            var profiler = new Euler.Profiler();
 
             int numRows = 80;
             int numCols = 80;
 
-            using(profiler.Step("LoadMatrix"))
-            {
-                matrix = LoadMatrix("Euler81.p081_matrix.txt", numCols, numRows);
-            }
+            var matrix = LoadMatrix("Euler81.p081_matrix.txt", numCols, numRows);
             var minPathLengths = new long[numCols, numRows];
             
             for (int col = 0; col < numCols; ++col)
@@ -158,14 +156,13 @@ namespace Euler81
 
             int numInspected = 0;
 
-            using(profiler.Step("Main Loop"))
             while(searchFrontier.Count > 0)
             {
                 var next = searchFrontier[0];
                 searchFrontier.RemoveAt(0);
                 ++numInspected;
 
-                using(profiler.Step("Console write"))
+                using(profiler.Time("Console write"))
                 Console.WriteLine($"{numInspected}/{numInspected + searchFrontier.Count}: ({next.currentLocation}: {next.locationsInPath.Count}, {next.pathSum}, {next.heuristicValue}");
 
                 if (goalFunc(next))
@@ -175,21 +172,15 @@ namespace Euler81
                 }
                 else
                 {
-                    using(profiler.Step("Get neighbors"))
+                    using(profiler.Time("Get neighbors"))
                     searchFrontier.AddRange(neighborFunc(next));
-                    using(profiler.Step("Sort search frontier"))
-                    searchFrontier = searchFrontier.OrderBy(s => s.heuristicValue).ToList();
-                }
 
-                if(numInspected >= 30000) 
-                {
-                    Console.WriteLine(profiler.RenderPlainText());
-                    break;
+                    using(profiler.Time("Sort frontier"))
+                    searchFrontier.Sort();
                 }
             }
 
-            Console.WriteLine(profiler.RenderPlainText());
-
+            profiler.Print();
             //    create starting points of search
             //      need to store actual value, heuristic value, and path (for culling)
             //      also need to globally update best values to reach a certain square, so we reduce duplication (do later)
