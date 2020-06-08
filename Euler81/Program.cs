@@ -134,12 +134,12 @@ namespace Euler81
             var diagonalMins = DiagonalMins(matrix, numCols, numRows);
             var diagonalMinSums = diagonalMins.Reverse().PartialSums().Reverse().Append(0).ToArray();
 
-            Func<SearchState, long> heuristicFunc = s => s.pathSum + diagonalMinSums[s.currentLocation.col + s.currentLocation.row+1];   // assume all values are minimum value
+            Func<SearchState, long> heuristicFunc = s => s.pathSum + diagonalMinSums[s.currentLocation.col + s.currentLocation.row+1];
             //Func<SearchState, long> heuristicFunc = s => s.pathSum;   // assume all values are minimum value
             Func<SearchState, IEnumerable<SearchState>> neighborFunc = s => NeighborFunc(s,numCols, numRows, heuristicFunc,minPathLengths);
             Func<SearchState, bool> goalFunc = s => s.currentLocation.col == numCols - 1 && s.currentLocation.row == numRows - 1;
 
-            List<SearchState> searchFrontier = new List<SearchState>();
+            Euler.MinHeap<SearchState> searchFrontier = new Euler.MinHeap<SearchState>();
 
             var startState = new SearchState
             {
@@ -151,19 +151,16 @@ namespace Euler81
             startState.heuristicValue = heuristicFunc(startState);
 
             searchFrontier.Add(startState);
-
-            searchFrontier = searchFrontier.OrderBy(s => s.heuristicValue).ToList();
-
             int numInspected = 0;
 
             while(searchFrontier.Count > 0)
             {
-                var next = searchFrontier[0];
-                searchFrontier.RemoveAt(0);
+                SearchState next;
+                using(profiler.Time("Pop search state"))
+                {
+                    next = searchFrontier.Pop();
+                }
                 ++numInspected;
-
-                using(profiler.Time("Console write"))
-                Console.WriteLine($"{numInspected}/{numInspected + searchFrontier.Count}: ({next.currentLocation}: {next.locationsInPath.Count}, {next.pathSum}, {next.heuristicValue}");
 
                 if (goalFunc(next))
                 {
@@ -172,25 +169,12 @@ namespace Euler81
                 }
                 else
                 {
-                    using(profiler.Time("Get neighbors"))
+                    using(profiler.Time("Get neighbors and add to heap"))
                     searchFrontier.AddRange(neighborFunc(next));
-
-                    using(profiler.Time("Sort frontier"))
-                    searchFrontier.Sort();
                 }
             }
 
-            profiler.Print();
-            //    create starting points of search
-            //      need to store actual value, heuristic value, and path (for culling)
-            //      also need to globally update best values to reach a certain square, so we reduce duplication (do later)
-            //    order starting points by value + heuristic (A* search)
-            //    while we haven't found a solution:
-            //      pull the next thing off the priority queue
-            //      if we've reached the goal, print it
-            //      add all of its neighbors (if they don't conflict with the path, and if they are better than the best possible)
-
-            
+            profiler.Print();         
         }
     }
 }
