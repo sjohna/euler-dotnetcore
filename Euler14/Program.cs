@@ -10,7 +10,11 @@ namespace Euler14
     {
         static void Main(string[] args)
         {
-            ClosedRange(1,1000000).Select(n => (n, (long)(Collatz(n).Count()))).Aggregate((a, b) => (a.Item2 > b.Item2) ? a : b).Item1.ConsoleWriteLine();
+            ClosedRange(1,1000000)
+            .Select(n => (n, (long)(Collatz(n).Count())))
+            .Aggregate((a, b) => (a.Item2 > b.Item2) ? a : b)
+            .Item1
+            .ConsoleWriteLine();
         }
     }
 }
