@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EulerLib\EulerLib.csproj" />
-    <ProjectReference Include="..\Euler81\Euler81.csproj" />
+    <ProjectReference Include="..\Euler081\Euler081.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
