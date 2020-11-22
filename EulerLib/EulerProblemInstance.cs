@@ -6,6 +6,15 @@ namespace Euler
 {
     public class EulerProblemInstance<TResult>
     {
+        public static Func<String, TIn, TResult, EulerProblemInstance<TResult>> InstanceFactory<TIn>(Type problemType, int problemNumber) =>
+            (string methodName, TIn parameter, TResult result) =>
+            new EulerProblemInstance<TResult>(
+                    ProblemNumber: problemNumber,
+                    Method: methodName,
+                    ParameterRepresentation: parameter.ToString(),
+                    ExpectedResult: result,
+                    Execute: () => (TResult) problemType.GetMethod(methodName).Invoke(null, new object[] { parameter }));
+
         public EulerProblemInstance(
             int ProblemNumber,
             string Method,
@@ -23,6 +32,19 @@ namespace Euler
             this.execute = Execute;
             this.IsFull = IsFull;
             this.IsCanonical = IsCanonical;
+        }
+
+        // fluent-style methods for setting Canonical and Full/Mini
+        public EulerProblemInstance<TResult> Canonical()
+        {
+            this.IsCanonical = true;
+            return this;
+        }
+
+        public EulerProblemInstance<TResult> Mini()
+        {
+            this.IsFull = false;
+            return this;
         }
 
         public int ProblemNumber { get; private set; }

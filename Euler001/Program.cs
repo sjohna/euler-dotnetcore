@@ -38,20 +38,13 @@ namespace Euler1
         {
             get
             {
-                yield return new EulerProblemInstance<long>(
-                    ProblemNumber: 1,
-                    Method: nameof(FunctionChain),
-                    ParameterRepresentation: "999",
-                    ExpectedResult: 233168L,
-                    Execute: () => FunctionChain(999L),
-                    IsCanonical: true);
+                var factory = EulerProblemInstance<long>.InstanceFactory<long>(typeof(Euler1.Program), 1);
 
-                yield return new EulerProblemInstance<long>(
-                    ProblemNumber: 1,
-                    Method: nameof(ForLoop),
-                    ParameterRepresentation: "999",
-                    ExpectedResult: 233168L,
-                    Execute: () => ForLoop(999L));
+                yield return factory(nameof(FunctionChain), 999L, 233168L).Canonical();
+                yield return factory(nameof(ForLoop), 999L, 233168L);
+
+                yield return factory(nameof(FunctionChain), 9L, 23L).Mini();
+                yield return factory(nameof(ForLoop), 9L, 23L).Mini();
             }
         }
     }
