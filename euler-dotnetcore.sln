@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Euler035", "Euler035\Euler0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Euler008", "Euler008\Euler008.csproj", "{82103BDD-20B6-4532-AFFE-EA63D285EF9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EulerProblemTest", "EulerProblemTest\EulerProblemTest.csproj", "{21F8BDE3-FA99-4EB4-B664-206DC6E53297}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -307,6 +309,18 @@ Global
 		{82103BDD-20B6-4532-AFFE-EA63D285EF9E}.Release|x64.Build.0 = Release|Any CPU
 		{82103BDD-20B6-4532-AFFE-EA63D285EF9E}.Release|x86.ActiveCfg = Release|Any CPU
 		{82103BDD-20B6-4532-AFFE-EA63D285EF9E}.Release|x86.Build.0 = Release|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Debug|x64.Build.0 = Debug|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Debug|x86.Build.0 = Debug|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Release|x64.ActiveCfg = Release|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Release|x64.Build.0 = Release|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Release|x86.ActiveCfg = Release|Any CPU
+		{21F8BDE3-FA99-4EB4-B664-206DC6E53297}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
