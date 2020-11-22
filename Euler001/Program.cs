@@ -15,15 +15,15 @@ namespace Euler1
             FunctionChain(999).ConsoleWriteLine();
         }
 
-        public static long FunctionChain(long max)
+        public static long FunctionChain(long limit)
         {
-            return ClosedRange(1, max).Where(n => n % 3 == 0 || n % 5 == 0).Sum();
+            return ClosedRange(1, limit - 1).Where(n => n % 3 == 0 || n % 5 == 0).Sum();
         }
 
-        public static long ForLoop(long max)
+        public static long ForLoop(long limit)
         {
             long sum = 0;
-            for (long num = 1; num <= max; ++num)
+            for (long num = 1; num < limit; ++num)
             {
                 if (num % 3 == 0 || num % 5 == 0)
                 {
@@ -40,11 +40,11 @@ namespace Euler1
             {
                 var factory = EulerProblemInstance<long>.InstanceFactory<long>(typeof(Euler1.Program), 1);
 
-                yield return factory(nameof(FunctionChain), 999L, 233168L).Canonical();
-                yield return factory(nameof(ForLoop), 999L, 233168L);
+                yield return factory(nameof(FunctionChain), 1000L, 233168L).Canonical();
+                yield return factory(nameof(ForLoop), 1000L, 233168L);
 
-                yield return factory(nameof(FunctionChain), 9L, 23L).Mini();
-                yield return factory(nameof(ForLoop), 9L, 23L).Mini();
+                yield return factory(nameof(FunctionChain), 10L, 23L).Mini();
+                yield return factory(nameof(ForLoop), 10L, 23L).Mini();
             }
         }
     }
