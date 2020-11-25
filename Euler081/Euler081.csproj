@@ -2,8 +2,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EulerLib\EulerLib.csproj" />
-    <EmbeddedResource Include="p081_matrix.txt" />
-    <EmbeddedResource Include="exampleMatrix.txt" />
+    <EmbeddedResource Include="Matrices\p081_matrix.txt" />
+    <EmbeddedResource Include="Matrices\exampleMatrix.txt" />
   </ItemGroup>
 
   <ItemGroup>

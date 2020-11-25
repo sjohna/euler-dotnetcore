@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Euler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,6 +8,8 @@ using static Euler.Sequence;
 
 namespace Euler26
 {
+    // TODO: I think I can refactor this one
+
     public struct LongDivisionStep
     {
         public long Dividend {get;}
@@ -19,7 +22,7 @@ namespace Euler26
         }
     }
 
-    class Program
+    public class Program
     {
         public static int CycleLength(long dividend, long divisor)
         {
@@ -49,6 +52,22 @@ namespace Euler26
         static void Main(string[] args)
         {
             ClosedRange(1,1000).Select(n => (n, CycleLength(1,n))).OrderByDescending(c => c.Item2).First().ConsoleWriteLine();
+        }
+
+        public static long LongDivision(long upperBound)
+        {
+            return ClosedRange(1, upperBound-1).Select(n => (n, CycleLength(1, n))).OrderByDescending(c => c.Item2).First().Item1;
+        }
+
+        public static IEnumerable<EulerProblemInstance<long>> ProblemInstances
+        {
+            get
+            {
+                var factory = EulerProblemInstance<long>.InstanceFactory<long>(typeof(Euler26.Program), 26);
+
+                yield return factory(nameof(LongDivision), 1000L, 983L).Canonical();
+                yield return factory(nameof(LongDivision), 10L, 7L).Mini();
+            }
         }
     }
 }

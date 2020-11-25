@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using static Euler.Extension;
 using static Euler.Sequence;
 using System.Diagnostics.CodeAnalysis;
+using Euler;
 
 namespace Euler81
 {
     public class SearchState : IComparable<SearchState>
     {
-        public long[,] matrix;
+        public Matrix matrix;
         public (int col, int row) currentLocation;
         public HashSet<(int col, int row)> locationsInPath;
         public long pathSum;
@@ -23,12 +24,20 @@ namespace Euler81
 
     public class Program
     {
-        public static long[,] LoadMatrix(string matrixName, int cols, int rows) {
-            var ret = new long[cols,rows];
+        private static Lazy<Matrix> exampleMatrix = new Lazy<Matrix>(() => LoadMatrix("exampleMatrix", 5, 5));
+        private static Lazy<Matrix> fullMatrix = new Lazy<Matrix>(() => LoadMatrix("p081_matrix", 80, 80));
+
+        public static Matrix ExampleMatrix => exampleMatrix.Value;
+        public static Matrix FullMatrix => fullMatrix.Value;
+
+        public static Matrix LoadMatrix(string matrixName, int cols, int rows) {
+            var matrixValues = new long[cols,rows];
+
+            string resourceName = $"Euler081.Matrices.{matrixName}.txt";
 
             var assembly = typeof(Euler81.Program).Assembly;
 
-            using(Stream resourceStream = assembly.GetManifestResourceStream(matrixName))
+            using(Stream resourceStream = assembly.GetManifestResourceStream(resourceName))
             using(StreamReader reader = new StreamReader(resourceStream))
             {
                 for (int row = 0; row < rows; ++row)
@@ -36,11 +45,11 @@ namespace Euler81
                     var lineTokens = reader.ReadLine().Split(",");
                     for (int col = 0; col < cols; ++col) 
                     {
-                        ret[col,row] = Convert.ToInt64(lineTokens[col].Trim());
+                        matrixValues[col,row] = Convert.ToInt64(lineTokens[col].Trim());
                     }
                 }
 
-                return ret;
+                return new Matrix(matrixValues, rows, cols);
             }
         }
 
@@ -94,17 +103,17 @@ namespace Euler81
             return min;
         }
 
-        public static long[] DiagonalMins(long[,] matrix, int numCols, int numRows)
+        public static long[] DiagonalMins(Matrix matrix)
         {
-            var ret = new long[numCols + numRows - 1];
+            var ret = new long[matrix.NumCols + matrix.NumRows - 1];
 
             for (int i = 0; i < ret.Length; ++i)
             {
                 ret[i] = long.MaxValue;
-                for (int row = 0; row <= numRows; ++row)
+                for (int row = 0; row <= matrix.NumRows; ++row)
                 {
                     int col = i-row;
-                    if (col >= 0 && col<numCols && row<numRows)
+                    if (col >= 0 && col < matrix.NumCols && row < matrix.NumRows)
                     {
                         ret[i] = Math.Min(ret[i],matrix[col,row]);
                     }
@@ -118,31 +127,36 @@ namespace Euler81
         {
             var profiler = new Euler.Profiler();
 
-            int numRows = 80;
-            int numCols = 80;
+            AStarWithMinPathLengthCheck(FullMatrix, profiler).ConsoleWriteLine();
 
-            var matrix = LoadMatrix("Euler81.p081_matrix.txt", numCols, numRows);
-            var minPathLengths = new long[numCols, numRows];
-            
-            for (int col = 0; col < numCols; ++col)
+            profiler.Print();
+        }
+
+        public static long AStarWithMinPathLengthCheck(Matrix matrix)
+        {
+            return AStarWithMinPathLengthCheck(matrix, IProfiler.Default);
+        }
+
+        public static long AStarWithMinPathLengthCheck(Matrix matrix, IProfiler profiler = null)
+        {
+            if (profiler == null) profiler = IProfiler.Default;
+
+            var minPathLengths = new long[matrix.NumCols, matrix.NumRows];
+
+            for (int col = 0; col < matrix.NumCols; ++col)
             {
-                for (int row = 0; row < numRows; ++row)
+                for (int row = 0; row < matrix.NumRows; ++row)
                 {
-                    minPathLengths[col,row] = long.MaxValue;
+                    minPathLengths[col, row] = long.MaxValue;
                 }
             }
 
-            // int numRows = 5;
-            // int numCols = 5;
-            // var matrix = LoadMatrix("Euler81.exampleMatrix.txt", numCols, numRows);
-
-            var diagonalMins = DiagonalMins(matrix, numCols, numRows);
+            var diagonalMins = DiagonalMins(matrix);
             var diagonalMinSums = diagonalMins.Reverse().PartialSums().Reverse().Append(0).ToArray();
 
-            Func<SearchState, long> heuristicFunc = s => s.pathSum + diagonalMinSums[s.currentLocation.col + s.currentLocation.row+1];
-            //Func<SearchState, long> heuristicFunc = s => s.pathSum;   // assume all values are minimum value
-            Func<SearchState, IEnumerable<SearchState>> neighborFunc = s => NeighborFunc(s,numCols, numRows, heuristicFunc,minPathLengths);
-            Func<SearchState, bool> goalFunc = s => s.currentLocation.col == numCols - 1 && s.currentLocation.row == numRows - 1;
+            Func<SearchState, long> heuristicFunc = s => s.pathSum + diagonalMinSums[s.currentLocation.col + s.currentLocation.row + 1];
+            Func<SearchState, IEnumerable<SearchState>> neighborFunc = s => NeighborFunc(s, matrix.NumCols, matrix.NumRows, heuristicFunc, minPathLengths);
+            Func<SearchState, bool> goalFunc = s => s.currentLocation.col == matrix.NumCols - 1 && s.currentLocation.row == matrix.NumRows - 1;
 
             Euler.MinHeap<SearchState> searchFrontier = new Euler.MinHeap<SearchState>();
 
@@ -151,17 +165,17 @@ namespace Euler81
                 matrix = matrix,
                 currentLocation = (col: 0, row: 0),
                 locationsInPath = new HashSet<(int col, int row)>((col: 0, row: 0).Yield()),
-                pathSum = matrix[0,0]
+                pathSum = matrix[0, 0]
             };
             startState.heuristicValue = heuristicFunc(startState);
 
             searchFrontier.Add(startState);
             int numInspected = 0;
 
-            while(searchFrontier.Count > 0)
+            while (searchFrontier.Count > 0)
             {
                 SearchState next;
-                using(profiler.Time("Pop search state"))
+                using (profiler.Time("Pop search state"))
                 {
                     next = searchFrontier.Pop();
                 }
@@ -169,17 +183,29 @@ namespace Euler81
 
                 if (goalFunc(next))
                 {
-                    Console.WriteLine($"Goal reached. Path sum: {next.pathSum}");
-                    break;
+                    // TODO: implement some sort of progress interface for this
+                    //Console.WriteLine($"Goal reached. Path sum: {next.pathSum}");
+                    return next.pathSum;
                 }
                 else
                 {
-                    using(profiler.Time("Get neighbors and add to heap"))
-                    searchFrontier.AddRange(neighborFunc(next));
+                    using (profiler.Time("Get neighbors and add to heap"))
+                        searchFrontier.AddRange(neighborFunc(next));
                 }
             }
 
-            profiler.Print();         
+            throw new Exception("Goal state not reached!");
+        }
+
+        public static IEnumerable<EulerProblemInstance<long>> ProblemInstances
+        {
+            get
+            {
+                var factory = EulerProblemInstance<long>.InstanceFactoryWithCustomParameterRepresentation<Matrix>(typeof(Euler81.Program), 81);
+
+                yield return factory(nameof(AStarWithMinPathLengthCheck), FullMatrix, "full matrix", 427337L).Canonical();
+                yield return factory(nameof(AStarWithMinPathLengthCheck), ExampleMatrix, "example matrix", 2427L).Mini();
+            }
         }
     }
 }

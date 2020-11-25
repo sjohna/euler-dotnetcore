@@ -14,6 +14,24 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Euler001\Euler001.csproj" />
+    <ProjectReference Include="..\Euler002\Euler002.csproj" />
+    <ProjectReference Include="..\Euler003\Euler003.csproj" />
+    <ProjectReference Include="..\Euler004\Euler004.csproj" />
+    <ProjectReference Include="..\Euler005\Euler005.csproj" />
+    <ProjectReference Include="..\Euler006\Euler006.csproj" />
+    <ProjectReference Include="..\Euler007\Euler007.csproj" />
+    <ProjectReference Include="..\Euler008\Euler008.csproj" />
+    <ProjectReference Include="..\Euler009\Euler009.csproj" />
+    <ProjectReference Include="..\Euler010\Euler010.csproj" />
+    <ProjectReference Include="..\Euler014\Euler014.csproj" />
+    <ProjectReference Include="..\Euler026\Euler026.csproj" />
+    <ProjectReference Include="..\Euler027\Euler027.csproj" />
+    <ProjectReference Include="..\Euler035\Euler035.csproj" />
+    <ProjectReference Include="..\Euler039\Euler039.csproj" />
+    <ProjectReference Include="..\Euler050\Euler050.csproj" />
+    <ProjectReference Include="..\Euler081\Euler081.csproj" />
+    <ProjectReference Include="..\Euler082\Euler082.csproj" />
+    <ProjectReference Include="..\Euler083\Euler083.csproj" />
     <ProjectReference Include="..\EulerLib\EulerLib.csproj" />
   </ItemGroup>
 

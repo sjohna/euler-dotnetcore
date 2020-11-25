@@ -20,6 +20,12 @@ namespace Euler
             if (instance.IsFull) ret.Properties.Add("Category", "Full");
             else ret.Properties.Add("Category", "Mini");
 
+            if (instance.IsSlow)
+            {
+                ret.Properties.Add("Category", "Slow");
+                ret.Explicit();
+            }    
+
             return ret;
         }
     }

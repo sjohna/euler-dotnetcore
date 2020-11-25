@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Euler;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using static Euler.Extension;
@@ -6,7 +8,7 @@ using static Euler.Sequence;
 
 namespace Euler8
 {
-    class Program
+    public class Program
     {
         static string numString = "73167176531330624919225119674426574742355349194934"
                                 + "96983520312774506326239578318016984801869478851843"
@@ -31,16 +33,32 @@ namespace Euler8
 
         static void Main(string[] args)
         {
-            checked 
+            FunctionChain(13)
+            .ConsoleWriteLine();
+        }
+
+        public static long FunctionChain(int numDigits)
+        {
+            checked
             {
-                ClosedRange(0,numString.Length-1-13)
+                return ClosedRange(0, numString.Length - 1 - numDigits)
                 .Select(
-                    (n) => numString.Substring((int)n,13)
+                    (n) => numString.Substring((int)n, numDigits)
                            .Select((c) => Convert.ToInt64(c.ToString()))
-                           .Aggregate(1L, (a, b) => a*b)
+                           .Aggregate(1L, (a, b) => a * b)
                 )
-                .Max()
-                .ConsoleWriteLine();
+                .Max();
+            }
+        }
+
+        public static IEnumerable<EulerProblemInstance<long>> ProblemInstances
+        {
+            get
+            {
+                var factory = EulerProblemInstance<long>.InstanceFactory<int>(typeof(Euler8.Program), 8);
+
+                yield return factory(nameof(FunctionChain), 13, 23514624000L).Canonical();
+                yield return factory(nameof(FunctionChain), 4, 5832L).Mini();
             }
         }
     }
