@@ -21,6 +21,7 @@ namespace EulerProblemTest
             foreach (var instance in Euler8.Program.ProblemInstances) yield return ToTestCaseData(instance);
             foreach (var instance in Euler9.Program.ProblemInstances) yield return ToTestCaseData(instance);
             foreach (var instance in Euler10.Program.ProblemInstances) yield return ToTestCaseData(instance);
+            foreach (var instance in Euler11.Program.ProblemInstances) yield return ToTestCaseData(instance);
             foreach (var instance in Euler14.Program.ProblemInstances) yield return ToTestCaseData(instance);
             foreach (var instance in Euler26.Program.ProblemInstances) yield return ToTestCaseData(instance);
             foreach (var instance in Euler27.Program.ProblemInstances) yield return ToTestCaseData(instance);

@@ -41,7 +41,8 @@ namespace Euler
         {
             return CountFrom(3,2).Where(n => IsPrime(n)).Prepend(2L);
         }
-
+        
+        // TODO: reconsider the use case for this. Might be better to have a CrossProduct, followed by a filter and a select
         public static IEnumerable<TResult> CrossSelect<TLeft,TRight,TResult>(
             IEnumerable<TLeft> left, 
             IEnumerable<TRight> right, 

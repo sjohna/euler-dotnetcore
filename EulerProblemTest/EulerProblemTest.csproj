@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Euler008\Euler008.csproj" />
     <ProjectReference Include="..\Euler009\Euler009.csproj" />
     <ProjectReference Include="..\Euler010\Euler010.csproj" />
+    <ProjectReference Include="..\Euler011\Euler011.csproj" />
     <ProjectReference Include="..\Euler014\Euler014.csproj" />
     <ProjectReference Include="..\Euler026\Euler026.csproj" />
     <ProjectReference Include="..\Euler027\Euler027.csproj" />
