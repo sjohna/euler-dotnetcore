@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace Euler
@@ -66,6 +67,44 @@ namespace Euler
         public static bool IsSquare(this BigInteger value)
         {
             return BigInteger.Pow(value.IntegerSquareRoot(), 2) == value;
+        }
+
+        public static IEnumerable<IEnumerable<T>> SubsetsOfSize<T>(this IEnumerable<T> enumeration, int size)
+        {
+            if (size == 0 || !enumeration.Any()) yield break;
+
+            if (size == 1)
+            {
+                foreach (var element in enumeration)
+                {
+                    yield return element.Yield();
+                }
+            }
+            else
+            {
+                var first = enumeration.First();
+
+                foreach (var partialSubset in enumeration.Skip(1).SubsetsOfSize(size - 1))
+                {
+                    yield return partialSubset.Prepend(first);
+                }
+
+                foreach (var subset in enumeration.Skip(1).SubsetsOfSize(size))
+                {
+                    yield return subset;
+                }
+            }
+        }
+
+        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> enumeration)
+        {
+            foreach (var innerEnumeration in enumeration)
+            {
+                foreach (var element in innerEnumeration)
+                {
+                    yield return element;
+                }
+            }
         }
     }
 }

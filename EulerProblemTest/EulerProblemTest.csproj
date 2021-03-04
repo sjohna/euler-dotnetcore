@@ -30,6 +30,7 @@
     <ProjectReference Include="..\Euler035\Euler035.csproj" />
     <ProjectReference Include="..\Euler037\Euler037.csproj" />
     <ProjectReference Include="..\Euler039\Euler039.csproj" />
+    <ProjectReference Include="..\Euler049\Euler049.csproj" />
     <ProjectReference Include="..\Euler050\Euler050.csproj" />
     <ProjectReference Include="..\Euler081\Euler081.csproj" />
     <ProjectReference Include="..\Euler082\Euler082.csproj" />
